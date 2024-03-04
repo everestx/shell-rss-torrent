@@ -88,6 +88,12 @@ parse_config() {
                 FeedData=$(wget "$FeedUser" "$FeedPass" -O - "$FeedUrl" 2> /dev/null)
             fi
 
+	    # Try one more time without FeedUser and FeedPass
+            if [ -z "$FeedData" ]
+            then
+                FeedData=$(wget -O - "$FeedUrl" 2> /dev/null)
+            fi
+
             if [ -z "$FeedData" ]
             then
                 echo "Error: feed $feed has no data"
